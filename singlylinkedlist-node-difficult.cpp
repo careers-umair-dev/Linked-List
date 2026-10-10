@@ -7,7 +7,7 @@ struct Node
     Node* next;
 };
 
-Node* head = NULL;
+Node* head = nullptr;
 
 // 1. Insert at beginning
 void insertBeginning(int value)
@@ -27,9 +27,9 @@ void insertEnd(int value)
     Node* newNode = new Node;
 
     newNode->data = value;
-    newNode->next = NULL;
+    newNode->next = nullptr;
 
-    if (head == NULL)
+    if (head == nullptr)
     {
         head = newNode;
     }
@@ -65,12 +65,12 @@ void insertPosition(int value, int pos)
 
     Node* temp = head;
 
-    for (int i = 1; i < pos - 1 && temp != NULL; i++)
+    for (int i = 1; i < pos - 1 && temp != nullptr; i++)
     {
         temp = temp->next;
     }
 
-    if (temp == NULL)
+    if (temp == nullptr)
     {
         cout << "Position out of range.\n";
         return;
@@ -87,7 +87,7 @@ void insertPosition(int value, int pos)
 // 4. Delete from beginning
 void deleteBeginning()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -103,16 +103,16 @@ void deleteBeginning()
 // 5. Delete from end
 void deleteEnd()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
     }
 
-    if (head->next == NULL)
+    if (head->next == nullptr)
     {
         delete head;
-        head = NULL;
+        head = nullptr;
 
         cout << "Last node deleted.\n";
         return;
@@ -120,13 +120,13 @@ void deleteEnd()
 
     Node* temp = head;
 
-    while (temp->next->next != NULL)
+    while (temp->next->next != nullptr)
     {
         temp = temp->next;
     }
 
     delete temp->next;
-    temp->next = NULL;
+    temp->next = nullptr;
 
     cout << "Last node deleted.\n";
 }
@@ -134,7 +134,7 @@ void deleteEnd()
 // 6. Delete a node by value
 void deleteValue(int value)
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -148,13 +148,13 @@ void deleteValue(int value)
 
     Node* temp = head;
 
-    while (temp->next != NULL &&
+    while (temp->next != nullptr &&
            temp->next->data != value)
     {
         temp = temp->next;
     }
 
-    if (temp->next == NULL)
+    if (temp->next == nullptr)
     {
         cout << "Value not found.\n";
         return;
@@ -170,7 +170,7 @@ void deleteValue(int value)
 // 7. Delete at position
 void deletePosition(int pos)
 {
-    if (head == NULL || pos < 1)
+    if (head == nullptr || pos < 1)
     {
         cout << "Invalid position or empty list.\n";
         return;
@@ -184,12 +184,12 @@ void deletePosition(int pos)
 
     Node* temp = head;
 
-    for (int i = 1; i < pos - 1 && temp != NULL; i++)
+    for (int i = 1; i < pos - 1 && temp != nullptr; i++)
     {
         temp = temp->next;
     }
 
-    if (temp == NULL || temp->next == NULL)
+    if (temp == nullptr || temp->next == nullptr)
     {
         cout << "Position does not exist.\n";
         return;
@@ -208,7 +208,7 @@ void searchValue(int value)
     Node* temp = head;
     int pos = 1;
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         if (temp->data == value)
         {
@@ -226,7 +226,7 @@ void searchValue(int value)
 // 9. Display list
 void display()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -236,7 +236,7 @@ void display()
 
     cout << "HEAD -> ";
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         cout << temp->data << " -> ";
         temp = temp->next;
@@ -251,7 +251,7 @@ int countNodes()
     int count = 0;
     Node* temp = head;
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         count++;
         temp = temp->next;
@@ -265,7 +265,7 @@ void updateValue(int oldValue, int newValue)
 {
     Node* temp = head;
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         if (temp->data == oldValue)
         {
@@ -283,11 +283,11 @@ void updateValue(int oldValue, int newValue)
 // 12. Reverse list
 void reverseList()
 {
-    Node* previous = NULL;
+    Node* previous = nullptr;
     Node* current = head;
-    Node* nextNode = NULL;
+    Node* nextNode = nullptr;
 
-    while (current != NULL)
+    while (current != nullptr)
     {
         nextNode = current->next;
         current->next = previous;
@@ -303,7 +303,7 @@ void reverseList()
 // 13. Find maximum value
 void findMaximum()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -312,7 +312,7 @@ void findMaximum()
     int maximum = head->data;
     Node* temp = head->next;
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         if (temp->data > maximum)
         {
@@ -328,7 +328,7 @@ void findMaximum()
 // 14. Find minimum value
 void findMinimum()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -337,7 +337,7 @@ void findMinimum()
     int minimum = head->data;
     Node* temp = head->next;
 
-    while (temp != NULL)
+    while (temp != nullptr)
     {
         if (temp->data < minimum)
         {
@@ -353,7 +353,7 @@ void findMinimum()
 // 15. Sort list in ascending order
 void sortList()
 {
-    if (head == NULL || head->next == NULL)
+    if (head == nullptr || head->next == nullptr)
     {
         cout << "List is already sorted.\n";
         return;
@@ -362,10 +362,10 @@ void sortList()
     Node* current;
     Node* index;
 
-    for (current = head; current->next != NULL;
+    for (current = head; current->next != nullptr;
          current = current->next)
     {
-        for (index = current->next; index != NULL;
+        for (index = current->next; index != nullptr;
              index = index->next)
         {
             if (current->data > index->data)
@@ -385,12 +385,12 @@ void removeDuplicates()
 {
     Node* current = head;
 
-    while (current != NULL)
+    while (current != nullptr)
     {
         Node* previous = current;
         Node* temp = current->next;
 
-        while (temp != NULL)
+        while (temp != nullptr)
         {
             if (temp->data == current->data)
             {
@@ -414,7 +414,7 @@ void removeDuplicates()
 // 17. Find middle node (slow/fast pointers)
 void findMiddle()
 {
-    if (head == NULL)
+    if (head == nullptr)
     {
         cout << "List is empty.\n";
         return;
@@ -423,7 +423,7 @@ void findMiddle()
     Node* slow = head;
     Node* fast = head;
 
-    while (fast != NULL && fast->next != NULL)
+    while (fast != nullptr && fast->next != nullptr)
     {
         slow = slow->next;
         fast = fast->next->next;
@@ -435,7 +435,7 @@ void findMiddle()
 // 18. Clear the entire list
 void clearList()
 {
-    while (head != NULL)
+    while (head != nullptr)
     {
         Node* temp = head;
         head = head->next;
