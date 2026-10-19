@@ -1,0 +1,709 @@
+
+#include <iostream>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node* next;
+};
+
+class CircularLinkedList
+{
+private:
+    Node* head;
+
+public:
+    CircularLinkedList()
+    {
+        head = nullptr;
+    }
+
+    // 1. Count Nodes
+    int countNodes()
+    {
+        if (head == nullptr)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        Node* temp = head;
+
+        do
+        {
+            count++;
+            temp = temp->next;
+        } while (temp != head);
+
+        return count;
+    }
+
+    // 2. Insert at Beginning
+    void insertBeginning(int value)
+    {
+        Node* newNode = new Node;
+        newNode->data = value;
+
+        if (head == nullptr)
+        {
+            head = newNode;
+            newNode->next = head;
+        }
+        else
+        {
+            Node* temp = head;
+
+            while (temp->next != head)
+            {
+                temp = temp->next;
+            }
+
+            newNode->next = head;
+            temp->next = newNode;
+            head = newNode;
+        }
+
+        cout << "Node inserted successfully.\n";
+    }
+
+    // 3. Insert at End
+    void insertEnd(int value)
+    {
+        Node* newNode = new Node;
+        newNode->data = value;
+
+        if (head == nullptr)
+        {
+            head = newNode;
+            newNode->next = head;
+        }
+        else
+        {
+            Node* temp = head;
+
+            while (temp->next != head)
+            {
+                temp = temp->next;
+            }
+
+            temp->next = newNode;
+            newNode->next = head;
+        }
+
+        cout << "Node inserted successfully.\n";
+    }
+
+    // 4. Insert at Position
+    void insertPosition(int value, int pos)
+    {
+        int total = countNodes();
+
+        if (pos < 1 || pos > total + 1)
+        {
+            cout << "Invalid position.\n";
+            return;
+        }
+
+        if (pos == 1)
+        {
+            insertBeginning(value);
+            return;
+        }
+
+        Node* temp = head;
+
+        for (int i = 1; i < pos - 1; i++)
+        {
+            temp = temp->next;
+        }
+
+        Node* newNode = new Node;
+        newNode->data = value;
+
+        newNode->next = temp->next;
+        temp->next = newNode;
+
+        cout << "Node inserted at position "
+             << pos << ".\n";
+    }
+
+    // 5. Delete from Beginning
+    void deleteBeginning()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        if (head->next == head)
+        {
+            delete head;
+            head = nullptr;
+        }
+        else
+        {
+            Node* temp = head;
+            Node* last = head;
+
+            while (last->next != head)
+            {
+                last = last->next;
+            }
+
+            head = head->next;
+            last->next = head;
+
+            delete temp;
+        }
+
+        cout << "First node deleted.\n";
+    }
+
+    // 6. Delete from End
+    void deleteEnd()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        if (head->next == head)
+        {
+            delete head;
+            head = nullptr;
+        }
+        else
+        {
+            Node* temp = head;
+
+            while (temp->next->next != head)
+            {
+                temp = temp->next;
+            }
+
+            Node* del = temp->next;
+            temp->next = head;
+
+            delete del;
+        }
+
+        cout << "Last node deleted.\n";
+    }
+
+    // 7. Delete by Value
+    void deleteValue(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* current = head;
+        Node* previous = nullptr;
+
+        do
+        {
+            if (current->data == value)
+            {
+                if (current == head)
+                {
+                    deleteBeginning();
+                    return;
+                }
+
+                previous->next = current->next;
+                delete current;
+
+                cout << "Node deleted successfully.\n";
+                return;
+            }
+
+            previous = current;
+            current = current->next;
+
+        } while (current != head);
+
+        cout << "Value not found.\n";
+    }
+
+    // 8. Delete at Position
+    void deletePosition(int pos)
+    {
+        int total = countNodes();
+
+        if (pos < 1 || pos > total)
+        {
+            cout << "Invalid position or empty list.\n";
+            return;
+        }
+
+        if (pos == 1)
+        {
+            deleteBeginning();
+            return;
+        }
+
+        Node* temp = head;
+
+        for (int i = 1; i < pos - 1; i++)
+        {
+            temp = temp->next;
+        }
+
+        Node* del = temp->next;
+        temp->next = del->next;
+
+        delete del;
+
+        cout << "Node deleted at position "
+             << pos << ".\n";
+    }
+
+    // 9. Search Value
+    void searchValue(int value)
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* temp = head;
+        int pos = 1;
+
+        do
+        {
+            if (temp->data == value)
+            {
+                cout << "Found at position "
+                     << pos << ".\n";
+                return;
+            }
+
+            temp = temp->next;
+            pos++;
+
+        } while (temp != head);
+
+        cout << "Value not found.\n";
+    }
+
+    // 10. Display List
+    void display()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* temp = head;
+
+        cout << "HEAD -> ";
+
+        do
+        {
+            cout << temp->data << " -> ";
+            temp = temp->next;
+        } while (temp != head);
+
+        cout << "HEAD\n";
+    }
+
+    // 11. Update First Matching Value
+    void updateValue(int oldValue, int newValue)
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* temp = head;
+
+        do
+        {
+            if (temp->data == oldValue)
+            {
+                temp->data = newValue;
+                cout << "Value updated successfully.\n";
+                return;
+            }
+
+            temp = temp->next;
+
+        } while (temp != head);
+
+        cout << "Value not found.\n";
+    }
+
+    // 12. Reverse List
+    void reverseList()
+    {
+        if (head == nullptr || head->next == head)
+        {
+            cout << "List reversed successfully.\n";
+            return;
+        }
+
+        Node* previous = head;
+        Node* current = head->next;
+        Node* nextNode;
+
+        while (current != head)
+        {
+            nextNode = current->next;
+            current->next = previous;
+            previous = current;
+            current = nextNode;
+        }
+
+        head->next = previous;
+        head = previous;
+
+        cout << "List reversed successfully.\n";
+    }
+
+    // 13. Find Maximum
+    void findMaximum()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        int maximum = head->data;
+        Node* temp = head->next;
+
+        while (temp != head)
+        {
+            if (temp->data > maximum)
+            {
+                maximum = temp->data;
+            }
+
+            temp = temp->next;
+        }
+
+        cout << "Maximum value: " << maximum << "\n";
+    }
+
+    // 14. Find Minimum
+    void findMinimum()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        int minimum = head->data;
+        Node* temp = head->next;
+
+        while (temp != head)
+        {
+            if (temp->data < minimum)
+            {
+                minimum = temp->data;
+            }
+
+            temp = temp->next;
+        }
+
+        cout << "Minimum value: " << minimum << "\n";
+    }
+
+    // 15. Sort in Ascending Order
+    void sortList()
+    {
+        if (head == nullptr || head->next == head)
+        {
+            cout << "List is already sorted.\n";
+            return;
+        }
+
+        Node* current = head;
+
+        do
+        {
+            Node* index = current->next;
+
+            while (index != head)
+            {
+                if (current->data > index->data)
+                {
+                    int temp = current->data;
+                    current->data = index->data;
+                    index->data = temp;
+                }
+
+                index = index->next;
+            }
+
+            current = current->next;
+
+        } while (current->next != head);
+
+        cout << "List sorted in ascending order.\n";
+    }
+
+    // 16. Remove Duplicates
+    void removeDuplicates()
+    {
+        if (head == nullptr || head->next == head)
+        {
+            cout << "Duplicate values removed.\n";
+            return;
+        }
+
+        Node* current = head;
+
+        do
+        {
+            Node* previous = current;
+            Node* temp = current->next;
+
+            while (temp != head)
+            {
+                if (temp->data == current->data)
+                {
+                    Node* del = temp;
+                    previous->next = temp->next;
+                    temp = temp->next;
+                    delete del;
+                }
+                else
+                {
+                    previous = temp;
+                    temp = temp->next;
+                }
+            }
+
+            current = current->next;
+
+        } while (current != head);
+
+        cout << "Duplicate values removed.\n";
+    }
+
+    // 17. Find Middle Node
+    void findMiddle()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* slow = head;
+        Node* fast = head;
+
+        while (fast->next != head &&
+               fast->next->next != head)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        cout << "Middle value: " << slow->data << "\n";
+    }
+
+    // 18. Clear Entire List
+    void clearList()
+    {
+        while (head != nullptr)
+        {
+            if (head->next == head)
+            {
+                delete head;
+                head = nullptr;
+            }
+            else
+            {
+                Node* temp = head;
+                Node* last = head;
+
+                while (last->next != head)
+                {
+                    last = last->next;
+                }
+
+                head = head->next;
+                last->next = head;
+
+                delete temp;
+            }
+        }
+
+        cout << "All nodes deleted.\n";
+    }
+
+    // Destructor
+    ~CircularLinkedList()
+    {
+        while (head != nullptr)
+        {
+            if (head->next == head)
+            {
+                delete head;
+                head = nullptr;
+            }
+            else
+            {
+                Node* temp = head;
+                Node* last = head;
+
+                while (last->next != head)
+                {
+                    last = last->next;
+                }
+
+                head = head->next;
+                last->next = head;
+
+                delete temp;
+            }
+        }
+    }
+};
+
+// Main Function
+int main()
+{
+    CircularLinkedList list;
+
+    int choice, value, pos;
+    int oldValue, newValue;
+
+    do
+    {
+        cout << "\n===== CIRCULAR LINKED LIST =====\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Insert at Position\n";
+        cout << "4. Delete from Beginning\n";
+        cout << "5. Delete from End\n";
+        cout << "6. Delete by Value\n";
+        cout << "7. Delete at Position\n";
+        cout << "8. Search Value\n";
+        cout << "9. Display List\n";
+        cout << "10. Count Nodes\n";
+        cout << "11. Update Value\n";
+        cout << "12. Reverse List\n";
+        cout << "13. Find Maximum\n";
+        cout << "14. Find Minimum\n";
+        cout << "15. Sort List\n";
+        cout << "16. Remove Duplicates\n";
+        cout << "17. Find Middle Node\n";
+        cout << "18. Clear List\n";
+        cout << "0. Exit\n";
+
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                cout << "Enter value: ";
+                cin >> value;
+                list.insertBeginning(value);
+                break;
+
+            case 2:
+                cout << "Enter value: ";
+                cin >> value;
+                list.insertEnd(value);
+                break;
+
+            case 3:
+                cout << "Enter value and position: ";
+                cin >> value >> pos;
+                list.insertPosition(value, pos);
+                break;
+
+            case 4:
+                list.deleteBeginning();
+                break;
+
+            case 5:
+                list.deleteEnd();
+                break;
+
+            case 6:
+                cout << "Enter value to delete: ";
+                cin >> value;
+                list.deleteValue(value);
+                break;
+
+            case 7:
+                cout << "Enter position: ";
+                cin >> pos;
+                list.deletePosition(pos);
+                break;
+
+            case 8:
+                cout << "Enter value to search: ";
+                cin >> value;
+                list.searchValue(value);
+                break;
+
+            case 9:
+                list.display();
+                break;
+
+            case 10:
+                cout << "Total nodes: "
+                     << list.countNodes() << "\n";
+                break;
+
+            case 11:
+                cout << "Enter old and new values: ";
+                cin >> oldValue >> newValue;
+                list.updateValue(oldValue, newValue);
+                break;
+
+            case 12:
+                list.reverseList();
+                break;
+
+            case 13:
+                list.findMaximum();
+                break;
+
+            case 14:
+                list.findMinimum();
+                break;
+
+            case 15:
+                list.sortList();
+                break;
+
+            case 16:
+                list.removeDuplicates();
+                break;
+
+            case 17:
+                list.findMiddle();
+                break;
+
+            case 18:
+                list.clearList();
+                break;
+
+            case 0:
+                cout << "Program terminated.\n";
+                break;
+
+            default:
+                cout << "Invalid choice.\n";
+        }
+
+    } while (choice != 0);
+
+    return 0;
+}
