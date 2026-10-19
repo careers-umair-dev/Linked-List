@@ -1,11 +1,17 @@
-
 #include <iostream>
 using namespace std;
 
-struct Node
+class Node
 {
+public:
     int data;
     Node* next;
+
+    Node(int value)
+    {
+        data = value;
+        next = nullptr;
+    }
 };
 
 class CircularLinkedList
@@ -14,6 +20,7 @@ private:
     Node* head;
 
 public:
+    // Constructor
     CircularLinkedList()
     {
         head = nullptr;
@@ -42,8 +49,7 @@ public:
     // 2. Insert at Beginning
     void insertBeginning(int value)
     {
-        Node* newNode = new Node;
-        newNode->data = value;
+        Node* newNode = new Node(value);
 
         if (head == nullptr)
         {
@@ -70,8 +76,7 @@ public:
     // 3. Insert at End
     void insertEnd(int value)
     {
-        Node* newNode = new Node;
-        newNode->data = value;
+        Node* newNode = new Node(value);
 
         if (head == nullptr)
         {
@@ -118,8 +123,7 @@ public:
             temp = temp->next;
         }
 
-        Node* newNode = new Node;
-        newNode->data = value;
+        Node* newNode = new Node(value);
 
         newNode->next = temp->next;
         temp->next = newNode;
@@ -358,6 +362,7 @@ public:
         {
             nextNode = current->next;
             current->next = previous;
+
             previous = current;
             current = nextNode;
         }
@@ -475,6 +480,7 @@ public:
                     Node* del = temp;
                     previous->next = temp->next;
                     temp = temp->next;
+
                     delete del;
                 }
                 else
