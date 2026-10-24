@@ -77,37 +77,36 @@ public:
     }
 
     // 4. Insert at Position
-    void insertPosition(int value, int pos)
+void insertPosition(int value, int pos)
+{
+    int total = countNodes();
+
+    if (pos < 1 || pos > total + 1)
     {
-        int total = countNodes();
-
-        if (pos < 1 || pos > total + 1)
-        {
-            cout << "Invalid position.\n";
-            return;
-        }
-
-        if (pos == 1)
-        {
-            insertBeginning(value);
-            return;
-        }
-
-        Node* temp = head;
-
-        for (int i = 1; i < pos - 1; i++)
-        {
-            temp = temp->next;
-        }
-
-        Node* newNode = new Node(value);
-
-        newNode->next = temp->next;
-        temp->next = newNode;
-
-        cout << "Node inserted at position "
-             << pos << ".\n";
+        cout << "Invalid position.\n";
+        return;
     }
+
+    if (pos == 1)
+    {
+        insertBeginning(value);
+        return;
+    }
+
+    Node* temp = head;
+
+    for (int i = 1; i < pos - 1 && temp->next != nullptr; i++)
+    {
+        temp = temp->next;
+    }
+
+    Node* newNode = new Node(value);
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+
+    cout << "Node inserted at position " << pos << ".\n";
+}
 
     // 5. Delete from Beginning
     void deleteBeginning()
